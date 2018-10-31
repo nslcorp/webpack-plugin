@@ -1,10 +1,10 @@
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const fetch = require('node-fetch');
 
-const pluginName = 'Plugin-Ticketmaster';
+const pluginName = 'Plugin';
+const url = 'http://www.mocky.io/v2/5bd9d9402f00007d0006d35c';
 
-const url = 'http://www.mocky.io/v2/5bd9a82e2f0000510006d254';
-
-class DynamicCdnWebpackPlugin {
+class Plugin {
   constructor() {}
 
   apply(compiler) {
@@ -20,26 +20,11 @@ class DynamicCdnWebpackPlugin {
 
     this.includeAssetsPlugin.apply(compiler);
 
-    compiler.hooks.beforeCompile.tapAsync(pluginName, (compilation, cb) => {
-      this.addFiles('beforeCompile', cb);
-    });
-
-    compiler.hooks.afterCompile.tapAsync(pluginName, (compilation, cb) => {
-      this.addFiles('11afterCompile', cb);
-    });
-
-    compiler.hooks.emit.tapAsync(pluginName, (compilation, cb) => {
-      this.addFiles('emit', cb);
-    });
-  }
-
-  addFiles(name, cb) {
-    console.log(name);
-    setTimeout(() => {
-      const assets = [
-        `./${name}/1.js`,
-        `https://${name}.cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js`
-      ];
+    compiler.hooks.afterCompile.tapAsync(pluginName, async (compilation, cb) => {
+      //FETCH data
+      const response = await fetch(url);
+      const responseData = await response.json();
+      const assets = responseData.map(d => d.src);
 
       // HACK: Calling the constructor directly is not recomended
       //       But that's the only secure way to edit `assets` afterhand
@@ -50,8 +35,8 @@ class DynamicCdnWebpackPlugin {
       });
 
       cb();
-    }, 2000);
+    });
   }
 }
 
-module.exports = DynamicCdnWebpackPlugin;
+module.exports = Plugin;

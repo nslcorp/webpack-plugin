@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Google Analytics",
+    "src": "https://www.google-analytics.com/analytics.js"
+  },
+  {
+    "title": "jQuery",
+    "src": "https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+  }
+]

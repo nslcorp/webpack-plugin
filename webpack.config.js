@@ -1,6 +1,5 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 
 const Plugin = require('./plugin');
 
@@ -45,18 +44,8 @@ module.exports = env => {
         inject: true,
         title: 'Webpack Plugin'
       }),
-      new Plugin({ env: 'development', market: 'market:es' })
 
-      /*new HtmlWebpackIncludeAssetsPlugin({
-        assets: [
-          'assets/1.js',
-          'bbb/1.js',
-          { path: './assets/2.js', attributes: { defer: true } },
-          './src/style.css',
-          'https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js'
-        ],
-        append: false
-      })*/
+      new Plugin({ env: 'development', market: 'market:es' })
     ]
   };
 };
