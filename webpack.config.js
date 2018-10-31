@@ -31,9 +31,17 @@ module.exports = env => {
 
         {
           test: /\.html$/,
-          use: {}
+          use: 'html-loader'
         }
       ]
-    }
+    },
+
+    plugins: [
+      new HTMLWebpackPlugin({
+        template: './assets/template.html',
+        inject: true,
+        title: 'Webpack Plugin'
+      })
+    ]
   };
 };
